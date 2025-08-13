@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pigeon Battle Bug Tracker</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #1a0d2b;
+    color: #fff;
+  }
+  header {
+    background: #2b0d4b;
+    padding: 20px;
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+  main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 80px);
+    padding: 20px;
+  }
+  .bug-container {
+    width: 80%;
+    max-width: 800px;
+    background: #2a0f3b;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.4);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    min-height: 300px;
+  }
+  .bug {
+    background: #3b1a5b;
+    padding: 15px 20px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s;
+  }
+  .bug:hover {
+    transform: scale(1.03);
+  }
+  .bug button {
+    background: #ff00ff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  .bug button:hover {
+    background: #e600e6;
+  }
+  .no-bugs {
+    text-align: center;
+    font-size: 1.5em;
+    color: #ff77ff;
+    margin-top: 50px;
+  }
+  input[type="text"] {
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    flex: 1;
+    margin-right: 10px;
+    font-size: 1em;
+  }
+  .add-bug-btn {
+    background: #ff00ff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  .add-bug-btn:hover {
+    background: #e600e6;
+  }
+  .add-bug-container {
+    display: flex;
+    margin-bottom: 20px;
+  }
+</style>
+</head>
+<body>
+
+<header>Pigeon Battle Bug Tracker</header>
+<main>
+  <div class="bug-container" id="bugContainer">
+  <img src="goonpigeon.jpg">
+    <div class="no-bugs" id="noBugs">No bugs!</div>
+  </div>
+</main>
+
+<script>
+  const bugContainer = document.getElementById('bugContainer');
+  const noBugs = document.getElementById('noBugs');
+
+  let bugs = [];
+
+  function renderBugs() {
+    bugContainer.innerHTML = '';
+    if (bugs.length === 0) {
+      bugContainer.appendChild(noBugs);
+      return;
+    }
+    bugs.forEach((bug, index) => {
+      const bugDiv = document.createElement('div');
+      bugDiv.className = 'bug';
+      bugDiv.innerHTML = 
+        <span>${bug}</span>
+        <button onclick="removeBug(${index})">Fix</button>
+      ;
+      bugContainer.appendChild(bugDiv);
+    });
+  }
+
+  function addBug(bugText) {
+    if (!bugText) return;
+    bugs.push(bugText);
+    renderBugs();
+  }
+
+  function removeBug(index) {
+    bugs.splice(index, 1);
+    renderBugs();
+  }
+
+  window.addBug = addBug;
+
+  renderBugs();
+</script>
+
+</body>
+</html>
